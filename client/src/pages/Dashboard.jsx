@@ -154,11 +154,11 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-6">
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-6 relative">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 pt-40 pb-40">
+      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 relative">
         {/* 🔴 LOGOUT */}
         <button
-          className="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm"
+          className="absolute top-6 right-6 bg-red-500 hover:bg-red-600 text-white text-base px-4 py-2 bold rounded-md"
           onClick={() => {
             localStorage.removeItem("token");
             window.location.reload();

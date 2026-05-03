@@ -30,11 +30,11 @@ export default function Login({ setPage }) {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-200">
-      <h1 className="text-center text-3xl underline mb-10 text-gray-500 mb-2">
+      <h1 className="text-center text-3xl underline mb-10 text-gray-500">
         Team Task Manager
       </h1>
 
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
+      <div className="mt-10 g-white p-8 rounded-2xl shadow-xl w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
           🔐 Login
         </h2>
