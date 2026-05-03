@@ -1,17 +1,25 @@
 import { useState } from "react";
+import API from "../api";
 
 export default function Login({ setPage }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const login = async () => {
-    const res = await fetch("http://localhost:5000/api/auth/login", {
+    const res = await fetch(`${API}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
 
     const data = await res.json();
+    console.log(data); // 👈 ADD THIS
+
+    if (!res.ok) {
+      alert(data.message);
+      return;
+    }
+
     localStorage.setItem("token", data.token);
     setPage("dashboard");
   };

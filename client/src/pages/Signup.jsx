@@ -1,10 +1,11 @@
 import { useState } from "react";
+import API from "../api";
 
 export default function Signup({ setPage }) {
   const [form, setForm] = useState({});
 
   const signup = async () => {
-    await fetch("http://localhost:5000/api/auth/signup", {
+    await fetch(`${API}/auth/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
