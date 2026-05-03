@@ -6,6 +6,11 @@ export default function Login({ setPage }) {
   const [password, setPassword] = useState("");
 
   const login = async () => {
+    if (!email || !password) {
+      alert("Fill all fields");
+      return;
+    }
+
     const res = await fetch(`${API}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -13,7 +18,6 @@ export default function Login({ setPage }) {
     });
 
     const data = await res.json();
-    console.log(data); // 👈 ADD THIS
 
     if (!res.ok) {
       alert(data.message);
@@ -36,14 +40,14 @@ export default function Login({ setPage }) {
 
         <input
           className="w-full border border-gray-300 p-3 rounded-lg mb-3 focus:ring-2 focus:ring-blue-400 outline-none"
-          placeholder="Email"
+          placeholder="eg. - admin@gmail.com"
           onChange={(e) => setEmail(e.target.value)}
         />
 
         <input
           type="password"
           className="w-full border border-gray-300 p-3 rounded-lg mb-4 focus:ring-2 focus:ring-blue-400 outline-none"
-          placeholder="Password"
+          placeholder="eg. - admin123"
           onChange={(e) => setPassword(e.target.value)}
         />
 
