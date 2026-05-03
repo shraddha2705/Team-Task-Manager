@@ -6,21 +6,36 @@ export default function Dashboard() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    fetch(`${API}/api/tasks`, {
+    fetch(`${API}/tasks`, {
       headers: { authorization: token },
     })
-      .then((res) => res.json())
-      .then((data) => setTasks(data));
+      .then(async (res) => {
+        if (!res.ok) {
+          const text = await res.text();
+          console.log("ERROR:", text);
+          return [];
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("TASKS:", data);
+        setTasks(data || []);
+      })
+      .catch((err) => console.log("FETCH ERROR:", err));
   }, []);
 
   return (
     <div>
       <h2>Dashboard</h2>
-      {tasks.map((t) => (
-        <div key={t._id}>
-          {t.title} - {t.status}
-        </div>
-      ))}
+
+      {Array.isArray(tasks) && tasks.length === 0 && <p>No tasks yet</p>}
+
+      {Array.isArray(tasks) &&
+        tasks.map((t) => (
+          <div key={t._id}>
+            {t.title} - {t.status}
+          </div>
+        ))}
     </div>
   );
 }
