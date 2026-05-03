@@ -20,4 +20,13 @@ router.get("/", auth, async (req, res) => {
   res.json(projects);
 });
 
+router.delete("/:id", auth, async (req, res) => {
+  if (req.user.role !== "admin") {
+    return res.status(403).json({ message: "Admins only" });
+  }
+
+  await Project.findByIdAndDelete(req.params.id);
+  res.json({ message: "Project deleted" });
+});
+
 module.exports = router;

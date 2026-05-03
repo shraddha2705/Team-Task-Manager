@@ -11,6 +11,9 @@ export default function Dashboard() {
 
   const token = localStorage.getItem("token");
 
+  const user = token ? JSON.parse(atob(token.split(".")[1])) : null;
+  const role = user?.role;
+
   // 🔹 FETCH TASKS
   const fetchTasks = async () => {
     const res = await fetch(`${API}/tasks`, {
@@ -99,6 +102,51 @@ export default function Dashboard() {
     fetchProjects();
   };
 
+  const deleteProject = async (id) => {
+    await fetch(`${API}/projects/${id}`, {
+      method: "DELETE",
+      headers: { authorization: token },
+    });
+
+    fetchProjects();
+  };
+
+  const editProject = async (id) => {
+    const newName = prompt("Enter new project name");
+    if (!newName) return;
+
+    await fetch(`${API}/projects/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: token,
+      },
+      body: JSON.stringify({ name: newName }),
+    });
+
+    fetchProjects();
+  };
+
+  const updateTask = async (id, updates) => {
+    await fetch(`${API}/tasks/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: token,
+      },
+      body: JSON.stringify(updates),
+    });
+
+    fetchTasks();
+  };
+
+  const editTask = async (id) => {
+    const newTitle = prompt("New task title");
+    if (!newTitle) return;
+
+    updateTask(id, { title: newTitle });
+  };
+
   // 🔹 LOAD DATA
   useEffect(() => {
     fetchTasks();
@@ -130,13 +178,22 @@ export default function Dashboard() {
 
           <div className="flex gap-2 mb-4">
             <input
-              className="flex-1 border border-gray-300 focus:ring-2 focus:ring-blue-400 p-2 rounded-md outline-none"
-              placeholder="Enter project name..."
+              disabled={role !== "admin"}
+              className={`flex-1 border p-2 rounded ${
+                role !== "admin" ? "bg-gray-200 cursor-not-allowed" : ""
+              }`}
+              placeholder="Project name"
               value={projectName}
               onChange={(e) => setProjectName(e.target.value)}
             />
+
             <button
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition"
+              disabled={role !== "admin"}
+              className={`px-4 py-2 rounded text-white ${
+                role !== "admin"
+                  ? "bg-gray-400"
+                  : "bg-blue-500 hover:bg-blue-600"
+              }`}
               onClick={createProject}
             >
               Add
@@ -151,9 +208,29 @@ export default function Dashboard() {
             {projects.map((p) => (
               <div
                 key={p._id}
-                className="p-3 bg-gray-50 hover:bg-gray-100 rounded-lg shadow-sm transition"
+                className="flex justify-between items-center p-3 bg-gray-50 hover:bg-gray-100 rounded-lg shadow-sm transition"
               >
-                📁 {p.name}
+                <span>📁 {p.name}</span>
+
+                {role === "admin" && (
+                  <div className="flex gap-3">
+                    {/* ✏️ EDIT */}
+                    <button
+                      className="text-blue-500 hover:text-blue-700 text-sm"
+                      onClick={() => editProject(p._id)}
+                    >
+                      Edit
+                    </button>
+
+                    {/* 🗑 DELETE */}
+                    <button
+                      className="text-red-500 hover:text-red-700 text-sm"
+                      onClick={() => deleteProject(p._id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -190,30 +267,43 @@ export default function Dashboard() {
           </div>
 
           <div className="space-y-3">
-            {tasks.length === 0 && (
-              <p className="text-gray-400 text-sm">No tasks yet</p>
-            )}
+            <div className="space-y-3">
+              {tasks.length === 0 && (
+                <p className="text-gray-400 text-sm">No tasks yet</p>
+              )}
 
-            {tasks.map((t) => (
-              <div
-                key={t._id}
-                className="flex justify-between items-center p-3 bg-gray-50 rounded-lg shadow-sm"
-              >
-                <span className="text-gray-800">{t.title}</span>
-
-                <span
-                  className={`px-3 py-1 text-sm rounded-full font-medium ${
-                    t.status === "done"
-                      ? "bg-green-200 text-green-800"
-                      : t.status === "in-progress"
-                        ? "bg-yellow-200 text-yellow-800"
-                        : "bg-gray-200 text-gray-700"
-                  }`}
+              {tasks.map((t) => (
+                <div
+                  key={t._id}
+                  className="flex justify-between items-center p-3 bg-gray-50 rounded-lg shadow-sm"
                 >
-                  {t.status}
-                </span>
-              </div>
-            ))}
+                  <span className="text-gray-800">{t.title}</span>
+
+                  <div className="flex gap-2 items-center">
+                    {/* 🔄 STATUS CHANGE */}
+                    <select
+                      value={t.status}
+                      onChange={(e) =>
+                        updateTask(t._id, { status: e.target.value })
+                      }
+                      className="border p-1 rounded"
+                    >
+                      <option value="todo">Todo</option>
+                      <option value="in-progress">In Progress</option>
+                      <option value="done">Done</option>
+                    </select>
+
+                    {/* ✏️ EDIT */}
+                    <button
+                      className="text-blue-500 hover:text-blue-700 text-sm"
+                      onClick={() => editTask(t._id)}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
