@@ -30,9 +30,10 @@ export default function Login({ setPage }) {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-200">
-      <h1 className="text-center text-lg text-gray-500 mb-2">
+      <h1 className="text-center text-3xl underline mb-10 text-gray-500 mb-2">
         Team Task Manager
       </h1>
+
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
           🔐 Login
@@ -40,14 +41,14 @@ export default function Login({ setPage }) {
 
         <input
           className="w-full border border-gray-300 p-3 rounded-lg mb-3 focus:ring-2 focus:ring-blue-400 outline-none"
-          placeholder="eg. - admin@gmail.com"
+          placeholder="admin@gmail.com"
           onChange={(e) => setEmail(e.target.value)}
         />
 
         <input
           type="password"
           className="w-full border border-gray-300 p-3 rounded-lg mb-4 focus:ring-2 focus:ring-blue-400 outline-none"
-          placeholder="eg. - admin123"
+          placeholder="admin123"
           onChange={(e) => setPassword(e.target.value)}
         />
 
@@ -66,6 +67,20 @@ export default function Login({ setPage }) {
         >
           Signup
         </button>
+
+        <div className="bg-blue-50 border border-blue-300 p-4 rounded-lg mb-4 text-sm mt-8">
+          <p className="font-semibold mb-1 text-lg">🔑 Login Info</p>
+          <p>Use your registered email & password.</p>
+
+          <div className="mt-2">
+            <p>
+              <b>Demo Admin:</b> admin@test.com / admin123
+            </p>
+            <p>
+              <b>Demo Member:</b> user@test.com / user123
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

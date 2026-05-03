@@ -26,7 +26,7 @@ export default function Signup({ setPage }) {
 
   return (
     <div className="min-h-screen flex  flex-col items-center justify-center bg-gradient-to-br from-green-100 to-emerald-200">
-      <h1 className="text-center text-lg text-gray-500 mb-2">
+      <h1 className="text-center text-3xl bold underline text-gray-500 mb-2">
         Team Task Manager
       </h1>
 
@@ -36,22 +36,27 @@ export default function Signup({ setPage }) {
             📝 Create Account
           </h2>
 
+          <p className="text-gray-500 text-sm mb-4 text-center">
+            Create an account and select your role{" "}
+            <strong>(Admin or Member)</strong>
+          </p>
+
           <input
             className="w-full border border-gray-300 p-3 rounded-lg mb-3 focus:ring-2 focus:ring-green-400 outline-none"
-            placeholder="Name"
+            placeholder="Admin"
             onChange={(e) => setForm({ ...form, name: e.target.value })}
           />
 
           <input
             className="w-full border border-gray-300 p-3 rounded-lg mb-3 focus:ring-2 focus:ring-green-400 outline-none"
-            placeholder="Email"
+            placeholder="admin@gmail.com"
             onChange={(e) => setForm({ ...form, email: e.target.value })}
           />
 
           <input
             type="password"
             className="w-full border border-gray-300 p-3 rounded-lg mb-3 focus:ring-2 focus:ring-green-400 outline-none"
-            placeholder="Password"
+            placeholder="admin123"
             onChange={(e) => setForm({ ...form, password: e.target.value })}
           />
 
@@ -59,8 +64,8 @@ export default function Signup({ setPage }) {
             className="w-full border border-gray-300 p-3 rounded-lg mb-4"
             onChange={(e) => setForm({ ...form, role: e.target.value })}
           >
-            <option value="member">Member</option>
             <option value="admin">Admin</option>
+            <option value="member">Member</option>
           </select>
 
           <button
@@ -82,7 +87,7 @@ export default function Signup({ setPage }) {
           </button>
         </div>
 
-        <div className="bg-yellow-50 border border-yellow-300 p-4 rounded-lg mb-4 text-sm inline-block h-max">
+        <div className="bg-yellow-50 border border-yellow-300 p-4 rounded-lg mb-4 text-sm inline-block h-max text-base">
           <p className="font-semibold mb-1">👋 Quick Start</p>
           <p>You can create a new account or use demo credentials:</p>
 

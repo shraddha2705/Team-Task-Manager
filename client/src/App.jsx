@@ -4,7 +4,7 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 
 export default function App() {
-  const [page, setPage] = useState("login");
+  const [page, setPage] = useState("signup");
 
   return (
     <>
