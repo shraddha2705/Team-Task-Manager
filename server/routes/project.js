@@ -3,7 +3,9 @@ const Project = require("../models/Project");
 const auth = require("../middleware/auth");
 
 router.post("/", auth, async (req, res) => {
-  if (req.user.role !== "admin") return res.status(403).send("Admins only");
+  if (req.user.role !== "admin") {
+    return res.status(403).json({ message: "Admins only" });
+  }
 
   const project = await Project.create({
     name: req.body.name,
