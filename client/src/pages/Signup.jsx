@@ -49,7 +49,7 @@ export default function Signup({ setPage }) {
 
           <input
             className="w-full border border-gray-300 p-3 rounded-lg mb-3 focus:ring-2 focus:ring-green-400 outline-none"
-            placeholder="admin@gmail.com"
+            placeholder="admin@test.com"
             onChange={(e) => setForm({ ...form, email: e.target.value })}
           />
 
@@ -64,8 +64,8 @@ export default function Signup({ setPage }) {
             className="w-full border border-gray-300 p-3 rounded-lg mb-4"
             onChange={(e) => setForm({ ...form, role: e.target.value })}
           >
-            <option value="admin">Admin</option>
             <option value="member">Member</option>
+            <option value="admin">Admin</option>
           </select>
 
           <button

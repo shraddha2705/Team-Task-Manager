@@ -39,17 +39,41 @@ export default function Login({ setPage }) {
           🔐 Login
         </h2>
 
+        <div className="flex gap-6 pt-6 pb-6 space-between">
+          <button
+            onClick={() => {
+              setEmail("admin@test.com");
+              setPassword("admin123");
+            }}
+            className="text-sm text-blue-500 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded transition ease-in-out duration-300"
+          >
+            Use Admin Demo
+          </button>
+
+          <button
+            onClick={() => {
+              setEmail("member@test.com");
+              setPassword("member123");
+            }}
+            className="text-sm text-blue-500 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded transition ease-in-out duration-300"
+          >
+            Use Member Demo
+          </button>
+        </div>
+
         <input
-          className="w-full border border-gray-300 p-3 rounded-lg mb-3 focus:ring-2 focus:ring-blue-400 outline-none"
-          placeholder="admin@gmail.com"
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="w-full border p-3 rounded-lg mb-3"
+          placeholder="admin@test.com"
         />
 
         <input
           type="password"
-          className="w-full border border-gray-300 p-3 rounded-lg mb-4 focus:ring-2 focus:ring-blue-400 outline-none"
-          placeholder="admin123"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
+          className="w-full border p-3 rounded-lg mb-4"
+          placeholder="admin123"
         />
 
         <button
@@ -67,20 +91,6 @@ export default function Login({ setPage }) {
         >
           Signup
         </button>
-
-        <div className="bg-blue-50 border border-blue-300 p-4 rounded-lg mb-4 text-sm mt-8">
-          <p className="font-semibold mb-1 text-lg">🔑 Login Info</p>
-          <p>Use your registered email & password.</p>
-
-          <div className="mt-2">
-            <p>
-              <b>Demo Admin:</b> admin@test.com / admin123
-            </p>
-            <p>
-              <b>Demo Member:</b> user@test.com / user123
-            </p>
-          </div>
-        </div>
       </div>
     </div>
   );
